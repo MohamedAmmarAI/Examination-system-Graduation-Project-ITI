@@ -1,0 +1,10 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<RptDataSource xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" Name="ExaminationSystem">
+  <ConnectionProperties>
+    <Extension>SQL</Extension>
+    <ConnectString>Data Source=DESKTOP-N3BS0SV\SQLEXPRESS;Initial Catalog=ExaminationSystem;TrustServerCertificate=True</ConnectString>
+    <IntegratedSecurity>true</IntegratedSecurity>
+    <Prompt>Specify a user name and password for data source ExaminationSystem</Prompt>
+  </ConnectionProperties>
+  <DataSourceID>b67d7d8e-c778-49d4-a90b-19aba04b69f3</DataSourceID>
+</RptDataSource>
