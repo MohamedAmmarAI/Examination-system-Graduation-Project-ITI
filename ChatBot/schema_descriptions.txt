@@ -1,0 +1,168 @@
+## Examination System Data Warehouse Schema Description
+
+Here's a description of each table in the provided schema:
+
+**1. DimBranch:**
+
+* **Purpose:** Stores dimensional information about branches.
+* **Columns:**
+    * `BranchSK` (INTEGER, Primary Key, Identity): Surrogate key for the branch.
+    * `BranchID` (INTEGER, Not Null):  Unique identifier for the branch.
+    * `BranchName` (VARCHAR(50)): Name of the branch.
+    * `Location` (VARCHAR(50)): Location of the branch.
+* **Primary Key:** `BranchSK`
+* **Foreign Keys:** None
+* **Sample Row:** (1, 1, 'ITI Smart Village', 'Giza')
+
+
+**2. DimCourse:**
+
+* **Purpose:** Stores dimensional information about courses.
+* **Columns:**
+    * `CourseSK` (INTEGER, Primary Key, Identity): Surrogate key for the course.
+    * `CourseID` (VARCHAR(50), Not Null): Unique identifier for the course.
+    * `CourseTitle` (VARCHAR(50)): Title of the course.
+    * `CreditHours` (INTEGER): Number of credit hours for the course.
+* **Primary Key:** `CourseSK`
+* **Foreign Keys:** None
+* **Sample Row:** (1, '1', 'HTML & CSS', 2)
+
+
+**3. DimDate:**
+
+* **Purpose:** Stores dimensional information about dates.  Useful for time-series analysis.
+* **Columns:**
+    * `DateSK` (INTEGER, Primary Key): Surrogate key for the date.
+    * `Date` (DATE): Date.
+    * `Day` (INTEGER): Day of the month.
+    * `Month` (INTEGER): Month of the year.
+    * `Year` (INTEGER): Year.
+* **Primary Key:** `DateSK`
+* **Foreign Keys:** None
+* **Sample Row:** (20200101, '2020-01-01', 1, 1, 2020)
+
+
+**4. DimExam:**
+
+* **Purpose:** Stores dimensional information about exams.
+* **Columns:**
+    * `ExamSK` (INTEGER, Primary Key, Identity): Surrogate key for the exam.
+    * `ExamID` (INTEGER): Unique identifier for the exam.
+    * `ExamDate` (DATETIME): Date and time of the exam.
+    * `StartTime` (TIME): Start time of the exam.
+    * `EndTime` (TIME): End time of the exam.
+    * `Grade` (FLOAT(53)):  Maximum possible grade for the exam (not student's score).
+    * `DifficultyLevel` (CHAR(20)): Difficulty level of the exam.
+    * `CourseID` (INTEGER):  Foreign key referencing the course.  Note: This should likely be a foreign key to `DimCourse`. The schema shows it as an integer, requiring modification to properly link to `DimCourse`.
+* **Primary Key:** `ExamSK`
+* **Foreign Keys:**  `CourseID` (should be a foreign key to `DimCourse(CourseID)` after schema correction)
+* **Sample Row:** (1, 1, '2023-01-10 00:00:00', '10:00:00', '12:00:00', 100.0, 'Medium', 5)
+
+
+**5. DimInstructor:**
+
+* **Purpose:** Stores dimensional information about instructors.
+* **Columns:**
+    * `InstructorSK` (INTEGER, Primary Key, Identity): Surrogate key for the instructor.
+    * `InstructorID` (INTEGER, Not Null): Unique identifier for the instructor.
+    * `InstructorName` (VARCHAR(50)): Name of the instructor.
+    * `Email` (VARCHAR(100)): Email address of the instructor.
+    * `Phone` (VARCHAR(20)): Phone number of the instructor.
+    * `Gender` (VARCHAR(20)): Gender of the instructor.
+    * `Specialization` (VARCHAR(50)): Specialization of the instructor.
+    * `DeptID` (INTEGER): Department ID of the instructor.
+    * `StartDate` (DATE): Start date of the instructor's employment.
+    * `EndDate` (DATE): End date of the instructor's employment.
+    * `IsCurrent` (BIT): Indicates whether the instructor is currently employed.
+* **Primary Key:** `InstructorSK`
+* **Foreign Keys:** None
+* **Sample Row:** (1, 1, 'Ahmed ElSayed', 'a.elsayed@iti.edu.eg', '01001234567', 'Male', 'Web Development', 1, NULL, NULL, 1)
+
+
+**6. DimIntake:**
+
+* **Purpose:** Stores dimensional information about intakes (student cohorts).
+* **Columns:**
+    * `IntakeSK` (INTEGER, Primary Key, Identity): Surrogate key for the intake.
+    * `IntakeID` (INTEGER, Not Null): Unique identifier for the intake.
+    * `IntakeName` (VARCHAR(50)): Name of the intake.
+    * `StartDate` (DATE): Start date of the intake.
+    * `EndDate` (DATE): End date of the intake.
+* **Primary Key:** `IntakeSK`
+* **Foreign Keys:** None
+* **Sample Row:** (1, 1, 'Intake 1 - 2023', '2023-01-01', '2023-04-30')
+
+
+**7. DimQuestion:**
+
+* **Purpose:** Stores dimensional information about exam questions.
+* **Columns:**
+    * `QuestionSK` (INTEGER, Primary Key, Identity): Surrogate key for the question.
+    * `QuestionID` (INTEGER, Not Null): Unique identifier for the question.
+    * `QuestionType` (VARCHAR(50)): Type of question (e.g., MCQ, True/False).
+    * `QuestionText` (TEXT): Text of the question.
+    * `CorrectAnswer` (TEXT): Correct answer to the question.
+    * `ExamID` (INTEGER): Foreign key referencing the exam.  Similar to `DimExam`, this should likely be a foreign key to `DimExam`.
+* **Primary Key:** `QuestionSK`
+* **Foreign Keys:** `ExamID` (should be a foreign key to `DimExam(ExamID)` after schema correction)
+* **Sample Row:** (1, 1, 'MCQ', 'Which SQL command is used to retrieve data from a database?', 'SELECT', 1)
+
+
+**8. DimStudent:**
+
+* **Purpose:** Stores dimensional information about students.
+* **Columns:**
+    * `StudentSK` (INTEGER, Primary Key, Identity): Surrogate key for the student.
+    * `StudentID` (INTEGER): Unique identifier for the student.
+    * `StudentName` (VARCHAR(50)): Name of the student.
+    * `Email` (VARCHAR(255)): Email address of the student.
+    * `Gender` (VARCHAR(10)): Gender of the student.
+    * `Phone` (VARCHAR(20)): Phone number of the student.
+    * `Age` (INTEGER): Age of the student.
+    * `City` (VARCHAR(50)): City of the student.
+    * `SocialLink` (VARCHAR(100)): Social media link of the student.
+    * `TrackID` (INTEGER): Track ID of the student.
+    * `CompanyID` (INTEGER): Company ID of the student.
+    * `StartDate` (DATE): Start date of the student's enrollment.
+    * `EndDate` (DATE): End date of the student's enrollment.
+    * `IsCurrent` (BIT): Indicates whether the student is currently enrolled.
+* **Primary Key:** `StudentSK`
+* **Foreign Keys:** None
+* **Sample Row:** (1, 1, 'Hany Ibrahim', 'hany1@email.com', 'Male', '01130075675', NULL, 'Alex', 'fb.com/hany1', 2, 2, NULL, NULL, 1)
+
+
+**9. FactStudent:**
+
+* **Purpose:**  The fact table containing the measures related to student exam performance.
+* **Columns:**
+    * `StudentExamFactSK` (INTEGER, Primary Key, Identity): Surrogate key for the fact record.
+    * `StudentSK` (INTEGER, Not Null, Foreign Key):  Foreign key referencing `DimStudent`.
+    * `CourseSK` (INTEGER, Not Null, Foreign Key): Foreign key referencing `DimCourse`.
+    * `ExamSK` (INTEGER, Not Null, Foreign Key): Foreign key referencing `DimExam`.
+    * `DateSK` (INTEGER, Not Null, Foreign Key): Foreign key referencing `DimDate`.
+    * `InstructorSK` (INTEGER, Not Null, Foreign Key): Foreign key referencing `DimInstructor`.
+    * `BranchSK` (INTEGER, Not Null, Foreign Key): Foreign key referencing `DimBranch`.
+    * `IntakeSK` (INTEGER, Not Null, Foreign Key): Foreign key referencing `DimIntake`.
+    * `QuestionSK` (INTEGER, Not Null, Foreign Key): Foreign key referencing `DimQuestion`.
+    * `Score` (DECIMAL(5, 2)): **This column represents the student's grade on a specific exam.**
+* **Primary Key:** `StudentExamFactSK`
+* **Foreign Keys:** `StudentSK`, `CourseSK`, `ExamSK`, `DateSK`, `InstructorSK`, `BranchSK`, `IntakeSK`, `QuestionSK`
+* **Sample Row:** (1, 4, 6, 6, 20230115, 6, 1, 7, 116, 100.00)
+
+
+**10. sysdiagrams:**
+
+* **Purpose:** This table is a system table used by SQL Server to store information about database diagrams.  It's not part of the examination system itself.
+* **Columns:**
+    * `name` (NVARCHAR(128), Not Null): Name of the diagram.
+    * `principal_id` (INTEGER, Not Null): ID of the database principal owning the diagram.
+    * `diagram_id` (INTEGER, Primary Key, Identity): Unique ID of the diagram.
+    * `version` (INTEGER): Version of the diagram.
+    * `definition` (VARBINARY(max)): Diagram definition.
+* **Primary Key:** `diagram_id`
+* **Foreign Keys:** None
+* **Sample Row:** ('Diagram_0', 1, 1, 1,  binary data)
+
+
+**Note:**  The provided schema has inconsistencies in data types for foreign keys (e.g., `DimExam`'s `CourseID` and `DimQuestion`'s `ExamID`).  These should be adjusted to ensure proper referential integrity.  Also, the sample data doesn't fully align with the defined schema (e.g., missing values in `DimStudent`).  These discrepancies should be resolved for a functioning data warehouse.
+--------------------------------------------------------------------------------
