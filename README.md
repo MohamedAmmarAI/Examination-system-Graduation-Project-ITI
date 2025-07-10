@@ -85,4 +85,4 @@ This system is designed to support academic and administrative operations for ed
 
 ---
 
-> This project was developed as part of the graduation requirement for the ITI Data Analysis program.
+> This project was developed as part of the graduation requirement for the ITI Power Bi Development program.
