@@ -54,7 +54,7 @@ This system is designed to support academic and administrative operations for ed
 
 | Name                     | Role               | GitHub                                | LinkedIn                                         |
 |--------------------------|--------------------|----------------------------------------|--------------------------------------------------|
-| Nada Hosny               | Marketing Analyst  | —                                      | [LinkedIn](https://www.linkedin.com/in/nada-hosny/) |
+| Nada Hosny               | Marketing Analyst | [GitHub](https://github.com/Nadahosny68) | [LinkedIn](https://www.linkedin.com/in/nada-hosny/) |
 | Mohamed Ammar           | Data Scientist     | [GitHub](https://github.com/MohamedAmmarAI) | [LinkedIn](http://www.linkedin.com/in/mohamed-ammar1) |
 | Mahmoud Elbaal          | Data Analyst       | [GitHub](https://github.com/MahmoudElbaal) | [LinkedIn](https://www.linkedin.com/in/mahmoudelbaal) |
 | Sabry Yahia             | Data Analyst       | [GitHub](https://github.com/SabryYahia) | [LinkedIn](https://www.linkedin.com/in/sabry-yahia-0b76102b3/) |
